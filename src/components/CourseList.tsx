@@ -1,22 +1,8 @@
-interface Course {
-  term: string;
-  number: string;
-  meets: string;
-  title: string;
-}
+import type { Course } from "../types/course";
 
 interface CourseListProps {
   courses: Record<string, Course>
 }
-
-/*
-const CourseList = ({courses}: CourseListProps) => (
-  <ul>
-    {Object.entries(courses).map(([courseLabel, course]) => 
-      (<li key = {courseLabel}> {course.term} CS {course.number}: {course.title} </li>))}
-  </ul>
-);
-*/
 
 const CourseList = ({courses}: CourseListProps) => (
   <div className="grid grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] gap-4 px-4">

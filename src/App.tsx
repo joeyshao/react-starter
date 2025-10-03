@@ -1,28 +1,13 @@
 import Banner from './components/Banner';
-import CourseList from './components/CourseList'
 import useJsonQuery from './utilities/fetch';
+import TermPage from './components/TermPage';
+import type { Course } from "./types/course";
 
 interface Schedule {
   title: string;
-  courses: Record<string, {
-    term: string;
-    number: string;
-    meets: string;
-    title: string;
-  }>;
+  courses: Record<string, Course>;
 }
 
-/*
-const App = () => (
-  <div>
-  <Banner title = { schedule.title }/>
-
-  <br></br>
-
-  <CourseList courses = { schedule.courses }/>
-  </div>
-);
-*/
 
 const App = () => {
   const [json, isLoading, error] = useJsonQuery('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
@@ -36,7 +21,7 @@ const App = () => {
     return <h1> No course data found... </h1>
   }
 
-  const schedule = json as Schedule;
+   const schedule = json as Schedule;
 
   return (
     <div>
@@ -44,7 +29,7 @@ const App = () => {
 
     <br></br>
 
-    <CourseList courses = { schedule.courses }/>
+    <TermPage courses = { schedule.courses }/>
     </div>
   )
 };
