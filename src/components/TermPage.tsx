@@ -15,7 +15,7 @@ const TermPage = ({ courses }: TermPageProps) => {
 
   return (
     <div>
-      <TermSelector selected={selected} setSelected={setSelected}/>
+      <TermSelector selected = { selected } setSelected={setSelected}/>
       <CourseList courses = { termCourses }  />
     </div>
   )
