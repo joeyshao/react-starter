@@ -21,7 +21,7 @@ const App = () => {
     return <h1> No course data found... </h1>
   }
 
-   const schedule = json as Schedule;
+  const schedule = json as Schedule;
 
   return (
     <div>
