@@ -5,6 +5,7 @@ import CourseList from "./CourseList";
 import toggleList from "../utilities/ToggleList";
 import Button from "./Button";
 import CourseModal from "./CourseModal";
+import anyConflict from "../utilities/conflicts";
 
 
 interface TermPageProps {
@@ -19,8 +20,8 @@ const TermPage = ({ courses }: TermPageProps) => {
   const [selected, setSelected] = useState<Course[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const toggleCourse = (item: Course) => {
-    setSelected(selectedCourses => toggleList(item, selectedCourses));
+  const toggleCourse = (course: Course) => {
+    (anyConflict(course, selected)) ? null : setSelected(toggleList(course, selected));
   }
 
   return (
