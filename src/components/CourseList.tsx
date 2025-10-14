@@ -1,5 +1,7 @@
 import type { Course } from "../types/course";
 import anyConflict from "../utilities/conflicts";
+import { Link } from '@tanstack/react-router';
+
 
 interface CourseListProps {
   courses: Record<string, Course>
@@ -28,12 +30,22 @@ interface CourseCardProps {
 const CourseCard = ({ course, selected, setSelected, conflict }: CourseCardProps) => (
   <div
     onClick={() => setSelected(course)}
-    className={`flex flex-col h-56 w-56 p-4 rounded-lg border-2 cursor-pointer
+    className={`relative flex flex-col h-56 w-56 p-4 rounded-lg border-2 cursor-pointer
   ${conflict ? "border-red-600 bg-red-50 cursor-not-allowed hover:scale-100" : ""}
               ${selected ? "border-blue-600 bg-blue-50" : "border-gray-300"}`}>
-                
+
     <div className="font-black text-xl">
       {`${course.term} CS ${course.number}`}
+    </div>
+          
+    <div>
+      <Link
+        to="/courses/$title/$meeting/edit"
+        params={{ title: course.title, meeting: course.meets }}
+        className="absolute top-2 right-2 text-sm text-blue-600 underline ml-3"
+      >
+        Edit
+      </Link>
     </div>
     <div className="flex-grow">
       {course.title}

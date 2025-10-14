@@ -1,16 +1,17 @@
-import Banner from './components/Banner';
-import useJsonQuery from './utilities/fetch';
-import TermPage from './components/TermPage';
-import type { Course } from "./types/course";
+import { createFileRoute } from '@tanstack/react-router'
+import Banner from '../components/Banner';
+import useJsonQuery from '../utilities/fetch';
+import TermPage from '../components/TermPage';
+import type { Course } from "../types/course";
 
 interface Schedule {
   title: string;
   courses: Record<string, Course>;
 }
 
-
-const App = () => {
-  const [json, isLoading, error] = useJsonQuery('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
+export const Route = createFileRoute('/')({
+  component: () => {
+    const [json, isLoading, error] = useJsonQuery('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
   if (error) {
     return <h1>Error loading user data: {'${error}'}</h1>
   }
@@ -32,6 +33,5 @@ const App = () => {
     <TermPage courses = { schedule.courses }/>
     </div>
   )
-};
-
-export default App;
+}
+})
