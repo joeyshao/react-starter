@@ -40,8 +40,8 @@ const CourseCard = ({ course, selected, setSelected, conflict }: CourseCardProps
           
     <div>
       <Link
-        to="/courses/$title/$meeting/edit"
-        params={{ title: course.title, meeting: course.meets }}
+        to="/courses/$title/$meeting/$term/$number/edit"
+        params={{ title: course.title, meeting: course.meets, term: course.term, number: course.number }}
         className="absolute top-2 right-2 text-sm text-blue-600 underline ml-3"
       >
         Edit

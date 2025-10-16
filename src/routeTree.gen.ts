@@ -10,43 +10,44 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CoursesTitleMeetingEditRouteImport } from './routes/courses.$title.$meeting.edit'
+import { Route as CoursesTitleMeetingTermNumberEditRouteImport } from './routes/courses.$title.$meeting.$term.$number.edit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CoursesTitleMeetingEditRoute = CoursesTitleMeetingEditRouteImport.update({
-  id: '/courses/$title/$meeting/edit',
-  path: '/courses/$title/$meeting/edit',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const CoursesTitleMeetingTermNumberEditRoute =
+  CoursesTitleMeetingTermNumberEditRouteImport.update({
+    id: '/courses/$title/$meeting/$term/$number/edit',
+    path: '/courses/$title/$meeting/$term/$number/edit',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/courses/$title/$meeting/edit': typeof CoursesTitleMeetingEditRoute
+  '/courses/$title/$meeting/$term/$number/edit': typeof CoursesTitleMeetingTermNumberEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/courses/$title/$meeting/edit': typeof CoursesTitleMeetingEditRoute
+  '/courses/$title/$meeting/$term/$number/edit': typeof CoursesTitleMeetingTermNumberEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/courses/$title/$meeting/edit': typeof CoursesTitleMeetingEditRoute
+  '/courses/$title/$meeting/$term/$number/edit': typeof CoursesTitleMeetingTermNumberEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/courses/$title/$meeting/edit'
+  fullPaths: '/' | '/courses/$title/$meeting/$term/$number/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/courses/$title/$meeting/edit'
-  id: '__root__' | '/' | '/courses/$title/$meeting/edit'
+  to: '/' | '/courses/$title/$meeting/$term/$number/edit'
+  id: '__root__' | '/' | '/courses/$title/$meeting/$term/$number/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CoursesTitleMeetingEditRoute: typeof CoursesTitleMeetingEditRoute
+  CoursesTitleMeetingTermNumberEditRoute: typeof CoursesTitleMeetingTermNumberEditRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,11 +59,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/courses/$title/$meeting/edit': {
-      id: '/courses/$title/$meeting/edit'
-      path: '/courses/$title/$meeting/edit'
-      fullPath: '/courses/$title/$meeting/edit'
-      preLoaderRoute: typeof CoursesTitleMeetingEditRouteImport
+    '/courses/$title/$meeting/$term/$number/edit': {
+      id: '/courses/$title/$meeting/$term/$number/edit'
+      path: '/courses/$title/$meeting/$term/$number/edit'
+      fullPath: '/courses/$title/$meeting/$term/$number/edit'
+      preLoaderRoute: typeof CoursesTitleMeetingTermNumberEditRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -70,7 +71,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CoursesTitleMeetingEditRoute: CoursesTitleMeetingEditRoute,
+  CoursesTitleMeetingTermNumberEditRoute:
+    CoursesTitleMeetingTermNumberEditRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
