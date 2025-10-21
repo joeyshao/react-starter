@@ -14,20 +14,21 @@ const CourseList = ({ courses, selected, toggleCourse }: CourseListProps) => {
   <div className="grid grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] gap-4 px-4">
     {
       Object.entries(courses).map(([courseLabel, courseData]) =>
-      <CourseCard key = {courseLabel} course = {courseData} selected = { selected.includes(courseData) }
+      <CourseCard key = {courseLabel} id = {courseLabel} course = {courseData} selected = { selected.includes(courseData) }
         setSelected = {() => toggleCourse(courseData)} conflict = { anyConflict(courseData, selected) }/>)
     }
   </div> )
 };
 
 interface CourseCardProps {
+  id: string;
   course: Course;
   selected: boolean;
   setSelected: ( course: Course ) => void;
   conflict: boolean;
 }
 
-const CourseCard = ({ course, selected, setSelected, conflict }: CourseCardProps) => (
+const CourseCard = ({ id, course, selected, setSelected, conflict }: CourseCardProps) => (
   <div
     onClick={() => setSelected(course)}
     className={`relative flex flex-col h-56 w-56 p-4 rounded-lg border-2 cursor-pointer
@@ -40,8 +41,8 @@ const CourseCard = ({ course, selected, setSelected, conflict }: CourseCardProps
           
     <div>
       <Link
-        to="/courses/$title/$meeting/$term/$number/edit"
-        params={{ title: course.title, meeting: course.meets, term: course.term, number: course.number }}
+        to="/courses/$id/$title/$meeting/$term/$number/edit"
+        params={{ id: id, title: course.title, meeting: course.meets, term: course.term, number: course.number }}
         className="absolute top-2 right-2 text-sm text-blue-600 underline ml-3"
       >
         Edit

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { initializeApp } from 'firebase/app';
-import { getDatabase, onValue, ref} from 'firebase/database';
+import { getDatabase, onValue, ref, update, get} from 'firebase/database';
 
 // Import the functions you need from the SDKs you need
 
@@ -40,3 +40,16 @@ export const useDataQuery = (path: string): [unknown, boolean, Error | undefined
 
   return [ data, loading, error ];
 };
+
+export function editCourse(
+  id: string,
+  updates: { title: string; meets: string; term: string; number: string }
+) {
+  update(ref(database, `courses/${id}`), updates);
+}
+
+export async function getCourse(id: string) {
+  const snapshot = await get(ref(database, `courses/${id}`));
+  if (!snapshot.exists()) throw new Error('Course not found');
+  return snapshot.val();
+}
