@@ -1,6 +1,7 @@
 import type { Course } from "../types/course";
 import anyConflict from "../utilities/conflicts";
 import { Link } from '@tanstack/react-router';
+import { useIsAdmin } from "../utilities/useIsAdmin";
 
 
 interface CourseListProps {
@@ -28,7 +29,10 @@ interface CourseCardProps {
   conflict: boolean;
 }
 
-const CourseCard = ({ id, course, selected, setSelected, conflict }: CourseCardProps) => (
+const CourseCard = ({ id, course, selected, setSelected, conflict }: CourseCardProps) => {
+  const { isAdmin, loading } = useIsAdmin();
+
+  return (
   <div
     onClick={() => setSelected(course)}
     className={`relative flex flex-col h-56 w-56 p-4 rounded-lg border-2 cursor-pointer
@@ -39,15 +43,22 @@ const CourseCard = ({ id, course, selected, setSelected, conflict }: CourseCardP
       {`${course.term} CS ${course.number}`}
     </div>
           
-    <div>
-      <Link
-        to="/courses/$id/$title/$meeting/$term/$number/edit"
-        params={{ id: id, title: course.title, meeting: course.meets, term: course.term, number: course.number }}
-        className="absolute top-2 right-2 text-sm text-blue-600 underline ml-3"
-      >
-        Edit
-      </Link>
-    </div>
+      {!loading && isAdmin && (
+        <Link
+          to="/courses/$id/$title/$meeting/$term/$number/edit"
+          params={{
+            id: id,
+            title: course.title,
+            meeting: course.meets,
+            term: course.term,
+            number: course.number,
+          }}
+          className="absolute top-2 right-2 text-sm text-blue-600 underline ml-3"
+          onClick={(e) => e.stopPropagation()}
+        >
+          Edit
+        </Link>
+      )}
     <div className="flex-grow">
       {course.title}
     </div>
@@ -56,6 +67,7 @@ const CourseCard = ({ id, course, selected, setSelected, conflict }: CourseCardP
       {course.meets}
     </div>
   </div>
-);
+  );
+};
 
 export default CourseList;

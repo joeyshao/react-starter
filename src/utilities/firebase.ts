@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, onValue, ref, update, get} from 'firebase/database';
+import { flushSync } from 'react-dom'
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, type NextOrObserver, type User} from 'firebase/auth';
 
 // Import the functions you need from the SDKs you need
 
@@ -53,3 +55,39 @@ export async function getCourse(id: string) {
   if (!snapshot.exists()) throw new Error('Course not found');
   return snapshot.val();
 }
+
+
+const auth = getAuth(firebase);
+
+export const signInWithGoogle = () => {
+  signInWithPopup(auth, new GoogleAuthProvider());
+};
+
+const firebaseSignOut = () => signOut(auth);
+
+export { firebaseSignOut as signOut, database };
+
+export interface AuthState {
+  user: User | null,
+  isAuthenticated: boolean,
+  isInitialLoading: boolean
+}
+
+export const addAuthStateListener = (fn: NextOrObserver<User | null>) => (
+  onAuthStateChanged(auth, fn)
+);
+
+export const useAuthState = (): AuthState => {
+  const [user, setUser] = useState(auth.currentUser)
+  const [isInitialLoading, setIsInitialLoading] = useState(true)
+  const isAuthenticated = !!user;
+
+  useEffect(() => addAuthStateListener((user: User | null) => {
+      flushSync(() => {
+        setUser(user);
+        setIsInitialLoading(false);
+      })
+    }), [])
+
+  return {user, isAuthenticated, isInitialLoading };
+};

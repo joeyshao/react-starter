@@ -5,34 +5,27 @@ import TermPage from '../components/TermPage';
 import type { Course } from "../types/course";
 import { useDataQuery } from '../utilities/firebase';
 
-interface Schedule {
-  title: string;
-  courses: Record<string, Course>;
-}
-
 export const Route = createFileRoute('/')({
   component: () => {
-    const [json, isLoading, error] = useDataQuery('/');
-  if (error) {
-    return <h1>Error loading user data: {'${error}'}</h1>
-  }
-  if (isLoading) {
-    return <h1> Loading course data... </h1>
-  }  
-  if (!json) {
-    return <h1> No course data found... </h1>
-  }
+    const [courses, loadingCourses, errorCourses] = useDataQuery('/courses');
+    const [title, loadingTitle, errorTitle] = useDataQuery('/title');
 
-  const schedule = json as Schedule;
+    if (loadingCourses || loadingTitle) return <h1>Loading course data...</h1>;
+    if (errorCourses || errorTitle)
+      return <h1>Error loading data: {String(errorCourses || errorTitle)}</h1>;
+    if (!courses) return <h1>No course data found...</h1>;
 
-  return (
-    <div>
-    <Banner title = { schedule.title }/>
+    const schedule = {
+      title: title ?? 'Courses',
+      courses: courses as Record<string, Course>,
+    };
 
-    <br></br>
-
-    <TermPage courses = { schedule.courses }/>
-    </div>
-  )
-}
-})
+    return (
+      <div>
+        <Banner title={title as string} />
+        <br />
+        <TermPage courses={schedule.courses} />
+      </div>
+    );
+  },
+});
