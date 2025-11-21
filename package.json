@@ -14,7 +14,6 @@
     "em:exec": "firebase emulators:exec --import=./saved-data 'npm start'",
     "em:execui": "firebase emulators:exec --ui --import=./saved-data 'npm start'",
     "cy:open": "cypress open"
-    
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
