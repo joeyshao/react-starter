@@ -9,7 +9,7 @@ interface TermSelectorProps {
 const TermSelector = ({ setTerm }: TermSelectorProps) => (
   <div className="flex justify-center gap-1 py-2">
   {['Fall', 'Winter', 'Spring'].map(option => (
-    <Button key = { option } text = { option } onClick = { () => setTerm(option) }></Button>))}
+    <Button key={option} text={option} onClick={() => setTerm(option)} data-cy={option}></Button>))}
   </div>
 );
 

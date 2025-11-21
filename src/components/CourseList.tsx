@@ -39,7 +39,7 @@ const CourseCard = ({ id, course, selected, setSelected, conflict }: CourseCardP
   ${conflict ? "border-red-600 bg-red-50 cursor-not-allowed hover:scale-100" : ""}
               ${selected ? "border-blue-600 bg-blue-50" : "border-gray-300"}`}>
 
-    <div className="font-black text-xl">
+    <div className="font-black text-xl" data-cy="course">
       {`${course.term} CS ${course.number}`}
     </div>
           
